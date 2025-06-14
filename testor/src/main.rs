@@ -7,15 +7,31 @@ fn calculation(){
 
 fn progress<T>(v:Vec<T>,f:fn()){
     let mut pro = 1;
-   for n in  v.iter(){
+    for n in  v.iter(){
     println!("{}{}",CLEAR,"*".repeat(pro));
     pro +=1;
     f();
-
 }}
+fn progress_h<T,  Iter>(it:Iter, f:fn())
+where Iter: Iterator<Item = T>{
+    let mut pro = 1;
+    for n in  it{
+    println!("{}{}",CLEAR,"*".repeat(pro));
+    pro +=1;
+    f();
+    }
+}
+
+
 fn main() {
+    use std::collections::HashSet;
+    let mut hashi =HashSet::new();
+    hashi.insert(0);
+    hashi.insert(1);
+    hashi.insert(2);
    let vector = vec![1,2,3,4,5,6,7,8,9,10];
    
     progress(vector, calculation);
+    progress_h(hashi.iter(), calculation);
    
 }
