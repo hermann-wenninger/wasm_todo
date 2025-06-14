@@ -21,4 +21,4 @@ members = [
     "nanoservices/auth/networking/axum_server",
     "nanoservices/auth/networking/rocket_server",
     "nanoservices/auth/networking/hyper_server"
-]
+, "testor"]
