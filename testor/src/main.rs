@@ -17,7 +17,14 @@ impl<Iter> Iterator for Progress <Iter>
                 self.iter.next()
     }
 }
-
+trait ProgressIteratorExtension:Sized{
+    fn progress(self)->Progress<Self>;
+}
+impl<Iter>ProgressIteratorExtension for Iter{
+    fn progress(self)->Progress<Self>{
+        Progress::new(self)
+    }
+}
 
 const CLEAR: &str = "\x1B[2J\x1B[1;1H";
 
@@ -59,7 +66,10 @@ fn main() {
      for _ in Progress::new(vr.iter()) {
         calculation();
      }
-
+     let vt = vec![1,2,3,4,5,6,7,8,9,10];
+     for _ in vt.iter().progress(){
+        calculation();
+     }
 
    
 }
