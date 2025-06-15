@@ -1,5 +1,26 @@
 use std::{time::Duration, thread::sleep};
+struct Progress<Iter>{
+    iter:Iter,
+    i:usize,
+}
+impl<Iter> Progress<Iter>{
+    pub fn new(iter:Iter)->Self{
+        Progress{iter,i:0}
+    }
+}
+impl<Iter> Iterator for Progress <Iter>
+    where Iter:Iterator {
+        type Item = Iter::Item;
+            fn next(&mut self)-> Option<Self::Item> {
+                println!("{}{}",CLEAR,"#".repeat(self.i));
+                self.i +=1;
+                self.iter.next()
+    }
+}
+
+
 const CLEAR: &str = "\x1B[2J\x1B[1;1H";
+
 fn calculation(){
     sleep(Duration::from_secs(1));
     println!("abc");
@@ -33,5 +54,12 @@ fn main() {
    
     progress(vector, calculation);
     progress_h(hashi.iter(), calculation);
+
+     let vr = vec![1,2,3,4,5,6,7,8,9,10];
+     for _ in Progress::new(vr.iter()) {
+        calculation();
+     }
+
+
    
 }
