@@ -6,7 +6,7 @@ struct Progress<Iter>{
 }
 impl<Iter> Progress<Iter>{
     pub fn new(iter:Iter)->Self{
-        Progress{iter,i:0}
+        Progress{iter,i:0,bound:None}
     }
 }
 impl<Iter> Iterator for Progress <Iter>
