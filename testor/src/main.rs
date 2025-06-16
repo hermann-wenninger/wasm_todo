@@ -28,11 +28,21 @@ impl<Iter> Iterator for Progress <Iter>
     where Iter:Iterator {
         type Item = Iter::Item;
             fn next(&mut self)-> Option<Self::Item> {
-                println!("{}{}",CLEAR,"#".repeat(self.i));
+                print!("{}{}",CLEAR);
+                match self.bound{
+                    Some(bound) =>
+                            println!("{}{}",
+                            "*".repeat(self.i),
+                            " ".repeat(bound - self.i)),
+                    None => {
+                            println!("{}","*".repeat(self.i));
+                    }
+                }
+                //println!("{}{}",CLEAR,"#".repeat(self.i));
                 self.i +=1;
                 self.iter.next()
-    }
-}
+                                                    }
+                            }
 trait ProgressIteratorExtension:Sized{
     fn progress(self)->Progress<Self>;
 }
@@ -86,6 +96,9 @@ fn main() {
      for _ in vt.iter().progress(){
         calculation();
      }
-
+     let kato = vec![1,2,3,4,5,6,7,8,9,10];
+     for n in kato.iter().progress().with_bound(){
+        calculation();
+     }
    
 }
