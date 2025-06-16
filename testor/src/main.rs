@@ -2,6 +2,7 @@ use std::{time::Duration, thread::sleep};
 struct Progress<Iter>{
     iter:Iter,
     i:usize,
+    bound: Option<usize>
 }
 impl<Iter> Progress<Iter>{
     pub fn new(iter:Iter)->Self{
