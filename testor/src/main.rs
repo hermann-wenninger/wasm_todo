@@ -28,7 +28,7 @@ impl<Iter> Iterator for Progress <Iter>
     where Iter:Iterator {
         type Item = Iter::Item;
             fn next(&mut self)-> Option<Self::Item> {
-                print!("{}{}",CLEAR);
+                print!("{}",CLEAR);
                 match self.bound{
                     Some(bound) =>
                             println!("{}{}",
