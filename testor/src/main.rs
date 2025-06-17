@@ -56,7 +56,7 @@ const CLEAR: &str = "\x1B[2J\x1B[1;1H";
 
 fn calculation(){
     sleep(Duration::from_secs(1));
-    println!("abc");
+  
     }
 
 fn progress<T>(v:Vec<T>,f:fn()){
