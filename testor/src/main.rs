@@ -2,7 +2,8 @@ use std::{time::Duration, thread::sleep};
 struct Progress<Iter>{
     iter:Iter,
     i:usize,
-    bound: Option<usize>
+    bound: Option<usize>,
+    delims:(char,char),
 }
 
 impl<Iter>Progress<Iter>
@@ -13,11 +14,16 @@ impl<Iter>Progress<Iter>
         }
 }
 
-
+impl<Iter>Progress<Iter>{
+    pub fn with_delims(mut self, delims:(char,char))->Self{
+        self.delims = delims;
+        self
+    }
+}
 
 impl<Iter> Progress<Iter>{
     pub fn new(iter:Iter)->Self{
-        Progress{iter,i:0,bound:None}
+        Progress{iter,i:0,bound:None,delims:('[', ']')}
     }
 }
 
@@ -31,9 +37,11 @@ impl<Iter> Iterator for Progress <Iter>
                 print!("{}",CLEAR);
                 match self.bound{
                     Some(bound) =>
-                            println!("{}{}",
+                            println!("{}{}{}{}",
+                            self.delims.0,
                             "*".repeat(self.i),
-                            " ".repeat(bound - self.i)),
+                            " ".repeat(bound - self.i),
+                            self.delims.1),
                     None => {
                             println!("{}","*".repeat(self.i));
                     }
@@ -61,7 +69,7 @@ fn calculation(){
 
 fn progress<T>(v:Vec<T>,f:fn()){
     let mut pro = 1;
-    for n in  v.iter(){
+    for _n in  v.iter(){
     println!("{}{}",CLEAR,"*".repeat(pro));
     pro +=1;
     f();
@@ -69,7 +77,7 @@ fn progress<T>(v:Vec<T>,f:fn()){
 fn progress_h<T,  Iter>(it:Iter, f:fn())
 where Iter: Iterator<Item = T>{
     let mut pro = 1;
-    for n in  it{
+    for _n in  it{
     println!("{}{}",CLEAR,"*".repeat(pro));
     pro +=1;
     f();
@@ -78,6 +86,7 @@ where Iter: Iterator<Item = T>{
 
 
 fn main() {
+    let brakts = ('<','>');
     use std::collections::HashSet;
     let mut hashi =HashSet::new();
     hashi.insert(0);
@@ -97,7 +106,7 @@ fn main() {
         calculation();
      }
      let kato = vec![1,2,3,4,5,6,7,8,9,10];
-     for n in kato.iter().progress().with_bound(){
+     for _n in kato.iter().progress().with_bound().with_delims(brakts){
         calculation();
      }
    
